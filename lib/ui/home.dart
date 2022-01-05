@@ -30,7 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    onPressed: () {},
+                   onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Doa(flag: 4)));
+                    },
                     child: Text(
                       "Doa Bekerja",
                       style: TextStyle(
@@ -51,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Doa()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Doa(flag: 0)));
                     },
                     child: Text(
                       "Doa Angelus",
