@@ -4,28 +4,46 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:imavi_app/ui/doa/doa.dart';
 import 'package:http/http.dart' as http;
-import 'package:imavi_app/ui/doa/listDoa.dart';
 
-class HomeScreen extends StatefulWidget {
+class ListDoa extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ListDoaState createState() => _ListDoaState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ListDoaState extends State<ListDoa> {
+  List _prays = [];
+  Future<void> getPrayerData() async {
+    var url = Uri.parse('https://61d7aed935f71e0017c2ebc8.mockapi.io/api/v1/listPrayer');
+    var response = await http.get(url);
+    var jsonData = jsonDecode(response.body);
+
+    setState(() {
+      _prays = jsonData;
+    });
+
+  }
 
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getPrayerData();
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return RefreshIndicator(
+      onRefresh: getPrayerData,
+      child: Scaffold(
+        appBar: AppBar(backgroundColor: Colors.purple, title: Text('Kumpulan Doa'),),
+        body: Column(
         children: <Widget>[
-          _headerTemplate(),
-          Container(
+          _prays.isNotEmpty
+          ?Expanded(child: ListView.builder(
+      padding: const EdgeInsets.all(8),
+      itemCount: _prays.length,
+      itemBuilder: (context, index) {
+                    return Container(
                   width: 200,
                   height: 45,
                   margin: EdgeInsets.only(top: 20),
@@ -38,19 +56,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     onPressed: () {
                       // Navigator.push(context, MaterialPageRoute(builder: (context)=> Doa(flag: 0)));
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> ListDoa()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Doa(flag:_prays[index]['id'])));
                     },
                     child: Text(
-                      'Kumpulan Doa',
+                      _prays[index]['title'],
                       style: TextStyle(
                         color: Color(0xffffffff),
                       ),
                     ),
                   ),
-                )
+                );
+                  },
+    ))
+          :Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
         ],
       )
-    );
+  ,
+      )
+        );
   }
 
   Container _headerTemplate() {
@@ -149,3 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 }
 
+class Pray {
+  final String title, content;
+  Pray(this.title, this.content);
+}
