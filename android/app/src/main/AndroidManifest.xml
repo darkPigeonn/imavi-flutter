@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.imavi_app">
+    package="com.imavi.imavi_app">
    <application
         android:label="imavi_app"
         android:icon="@mipmap/logoimavi">

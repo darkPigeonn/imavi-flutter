@@ -65,11 +65,16 @@ class _Doa extends State<Doa> {
   @override
     Widget build(BuildContext context) {
     return Scaffold(
-      body:  SingleChildScrollView(
+      body: Stack(
+        children: <Widget>[
+          new Container(
+            decoration: new BoxDecoration(image: new DecorationImage(image: new AssetImage("bgdoa.png"), fit: BoxFit.fill)),
+          ),
+        SingleChildScrollView(
         padding: const EdgeInsets.all(8),
-        child: Column(
-          children: <Widget>[
 
+        child: new Column(
+          children: <Widget>[
             Container(
               margin: EdgeInsets.only(top: 50),
               child: Text(
@@ -84,8 +89,13 @@ class _Doa extends State<Doa> {
               margin: EdgeInsets.only(top: 20),
               child: Text(
                 doa.toString(),
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16
+                  letterSpacing: 2,
+                  wordSpacing: 10,
+                  fontSize: 16,
+                  height: 1.5
+
                 ),
               ),
             ),
@@ -93,6 +103,10 @@ class _Doa extends State<Doa> {
           ],
         ),
       )
+        ],
+      )
+
+
     );
   }
 

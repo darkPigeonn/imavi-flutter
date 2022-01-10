@@ -1,4 +1,4 @@
-package com.example.imavi_app
+package com.imavi.imavi_app
 
 import io.flutter.embedding.android.FlutterActivity
 
